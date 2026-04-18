@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We Work Consulting - Site Principal</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0b1326;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="main-frame" src=""></iframe>
+    <script>
+        function updateIframeSrc() {
+            var frame = document.getElementById('main-frame');
+            var isMobile = window.innerWidth < 768;
+            var newSrc = isMobile ? 'homepage_mobile_we_work_consulting/code.html' : 'homepage_we_work_consulting/code.html';
+            
+            // Only update if it points to a different file
+            if (frame.src.indexOf(newSrc) === -1) {
+                frame.src = newSrc;
+            }
+        }
+        
+        updateIframeSrc();
+        
+        var resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateIframeSrc, 150);
+        });
+    </script>
+</body>
+</html>
