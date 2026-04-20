@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEWORK-CONSULTING.XYZ | Expertise Comptable & Audit 2026</title>
+    <title>WE WORK CONSULTING | Expertise Comptable & Commissariat aux Comptes</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React & ReactDOM CDN -->
@@ -13,33 +13,47 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #050505; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         
-        /* Custom scrollbar for dark theme */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+        :root {
+            --wwc-grey: #595959;
+            --wwc-lime: #A3E635;
+        }
 
-        .red-gradient-text {
-            background: linear-gradient(to right, #ef4444, #991b1b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #ffffff;
+            color: var(--wwc-grey);
+        }
+        
+        .bg-wwc-grey { background-color: var(--wwc-grey); }
+        .text-wwc-grey { color: var(--wwc-grey); }
+        .bg-wwc-lime { background-color: var(--wwc-lime); }
+        .text-wwc-lime { color: var(--wwc-lime); }
+        .border-wwc-lime { border-color: var(--wwc-lime); }
+
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
-            background: #ef4444;
-            border-radius: 0;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--wwc-lime);
             cursor: pointer;
-            border: 2px solid white;
+            border-radius: 50%;
+            border: 3px solid var(--wwc-grey);
         }
-
-        /* Prevent horizontal scroll during animations */
-        .overflow-x-hidden { overflow-x: hidden; }
     </style>
 </head>
 <body>
@@ -48,272 +62,240 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Icônes SVG intégrées
-        const IconArrowRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>;
-        const IconGlobe = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
-        const IconShield = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
-        const IconCpu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>;
-        const IconScale = () => <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>;
-        const IconMenu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>;
-        const IconX = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+        const IconCheck = () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>;
+        const IconGlobe = () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9h18"></path></svg>;
 
         const App = () => {
             const [revenue, setRevenue] = useState(1000000);
-            const [taxProfile, setTaxProfile] = useState('offshore');
             const [savings, setSavings] = useState(0);
-            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [isScrolled, setIsScrolled] = useState(false);
 
             useEffect(() => {
-                const multiplier = taxProfile === 'onshore' ? 0.08 : taxProfile === 'offshore' ? 0.15 : 0.25;
-                setSavings(Math.round(revenue * multiplier));
-            }, [revenue, taxProfile]);
+                setSavings(Math.round(revenue * 0.12));
+                const handleScroll = () => setIsScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, [revenue]);
 
             return (
-                <div className="min-h-screen text-white overflow-x-hidden flex flex-col">
+                <div className="flex flex-col min-h-screen">
                     {/* Navigation */}
-                    <nav className="w-full border-b border-white/5 backdrop-blur-md sticky top-0 z-[100] bg-[#050505]/90">
-                        <div className="flex items-center justify-between px-4 md:px-6 py-4 max-w-7xl mx-auto">
-                            <div className="flex items-center gap-2 text-lg md:text-2xl font-black tracking-tighter italic">
-                                <div className="w-8 h-8 md:w-10 md:h-10 bg-red-600 rounded-sm flex items-center justify-center text-white not-italic shadow-lg shadow-red-600/20">W</div>
-                                <span className="hidden sm:inline">WEWORK-CONSULTING<span className="text-red-600">.XYZ</span></span>
-                                <span className="sm:hidden text-red-600 font-black tracking-tighter">WWC.XYZ</span>
+                    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'}`}>
+                        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                {/* LOGO ACTUALISÉ EN JPG */}
+                                <img 
+                                    src="logowwc.jpg" 
+                                    className="h-10 md:h-14 w-auto object-contain" 
+                                    alt="Logo We Work Consulting"
+                                    onError={(e) => {
+                                        // Fallback visuel si le fichier est manquant au déploiement
+                                        e.target.style.display = 'none';
+                                        e.target.nextSibling.style.display = 'flex';
+                                    }}
+                                />
+                                <div className="hidden flex-col leading-none font-bold uppercase" style={{display: 'none'}}>
+                                    <span className="text-[#595959] text-sm md:text-lg">WE WORK</span>
+                                    <span className="text-[#A3E635] text-sm md:text-lg">CONSULTING</span>
+                                </div>
                             </div>
                             
-                            {/* Desktop Menu */}
-                            <div className="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-500">
-                                <a href="#expertise" className="hover:text-red-500 transition-colors">Tunisie Compliance</a>
-                                <a href="#international" className="hover:text-red-500 transition-colors">Global Tax</a>
-                                <a href="#simulator" className="hover:text-red-500 transition-colors">Audit IA</a>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <button className="hidden sm:block bg-white text-black px-5 py-2 md:px-6 md:py-2.5 rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300">
-                                    Portal
-                                </button>
-                                {/* Mobile Toggle */}
-                                <button 
-                                    className="lg:hidden p-2 text-white hover:text-red-500 transition-colors"
-                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                >
-                                    {isMenuOpen ? <IconX /> : <IconMenu />}
+                            <div className="hidden lg:flex items-center gap-8 font-semibold text-sm uppercase tracking-wider text-wwc-grey">
+                                <a href="#expertise" className="hover:text-wwc-lime transition-colors text-left">Expertises</a>
+                                <a href="#valeurs" className="hover:text-wwc-lime transition-colors text-left">Valeurs</a>
+                                <a href="#simulator" className="hover:text-wwc-lime transition-colors text-left">Optimisation</a>
+                                <button className="bg-wwc-grey text-white px-6 py-2 hover:bg-black transition-all font-bold">
+                                    Contact
                                 </button>
                             </div>
+                            
+                            <button className="lg:hidden text-wwc-grey">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                            </button>
                         </div>
-
-                        {/* Mobile Navigation Drawer */}
-                        {isMenuOpen && (
-                            <div className="lg:hidden absolute top-full left-0 w-full bg-neutral-950 border-b border-white/10 flex flex-col p-6 gap-6 text-center animate-in slide-in-from-top duration-300">
-                                <a href="#expertise" onClick={() => setIsMenuOpen(false)} className="text-xs font-black uppercase tracking-widest text-neutral-400 hover:text-red-500">Tunisie Compliance</a>
-                                <a href="#international" onClick={() => setIsMenuOpen(false)} className="text-xs font-black uppercase tracking-widest text-neutral-400 hover:text-red-500">Global Tax</a>
-                                <a href="#simulator" onClick={() => setIsMenuOpen(false)} className="text-xs font-black uppercase tracking-widest text-neutral-400 hover:text-red-500">Audit IA</a>
-                                <button className="sm:hidden bg-red-600 text-white px-6 py-4 rounded-none text-[10px] font-black uppercase tracking-widest">
-                                    Client Portal
-                                </button>
-                            </div>
-                        )}
                     </nav>
 
                     {/* Hero Section */}
-                    <header className="px-4 md:px-6 pt-16 md:pt-24 pb-24 md:pb-32 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24 overflow-hidden">
-                        <div className="flex-1 text-center lg:text-left z-10">
-                            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-500 text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] mb-8 animate-pulse">
-                                <IconShield /> Tunisian Law & Global Standards
-                            </div>
-                            <h1 className="text-4xl md:text-6xl lg:text-8xl font-black leading-[0.9] tracking-tighter mb-8 uppercase">
-                                Neutralisez la <br/> <span className="text-red-600">Friction</span> fiscale.
-                            </h1>
-                            <p className="text-base md:text-lg lg:text-xl text-neutral-400 max-w-xl mx-auto lg:mx-0 mb-10 font-medium leading-relaxed">
-                                L'administration tunisienne est devenue algorithmique. Votre défense doit l'être aussi. 
-                                <span className="text-white"> wework-consulting.xyz</span> fusionne l'expertise locale et l'ingénierie globale.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                <button className="bg-red-600 text-white px-8 md:px-12 py-4 md:py-5 font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 flex items-center justify-center gap-3 group shadow-xl shadow-red-600/10">
-                                    Audit 2026 <span className="group-hover:translate-x-2 transition-transform"><IconArrowRight /></span>
-                                </button>
-                                <button className="border border-white/10 bg-white/5 backdrop-blur-sm px-8 md:px-12 py-4 md:py-5 font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all duration-300">
-                                    Prix de Transfert
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Tactical UI Component - Responsive adjustments */}
-                        <div className="w-full max-w-xl relative group mt-8 lg:mt-0">
-                            <div className="absolute -inset-4 md:-inset-10 bg-red-600/10 blur-[80px] md:blur-[120px] opacity-30 pointer-events-none"></div>
-                            <div className="relative bg-neutral-900/50 backdrop-blur-xl border border-white/10 p-5 md:p-8 rounded-none shadow-2xl overflow-hidden">
-                                <div className="flex justify-between items-center mb-8 md:mb-10 border-b border-white/5 pb-6">
-                                    <div className="text-left">
-                                        <h3 className="text-[8px] md:text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1">Status Compliance (TN)</h3>
-                                        <p className="text-2xl md:text-4xl font-black text-emerald-400 tracking-tighter">99.8%</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <h3 className="text-[8px] md:text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1">Optimisation</h3>
-                                        <p className="text-2xl md:text-4xl font-black text-red-500 tracking-tighter">-22.5%</p>
-                                    </div>
-                                </div>
-                                
-                                <div className="space-y-4 md:space-y-6 mb-8 md:mb-10 text-left">
-                                    <div className="p-3 md:p-4 bg-white/5 border-l-2 border-red-600">
-                                        <div className="flex justify-between items-end mb-2">
-                                            <p className="text-[8px] md:text-[9px] text-neutral-400 font-black uppercase tracking-tighter">Retenue à la source (RS)</p>
-                                            <span className="text-[9px] font-bold text-red-500 uppercase">Sécurisé</span>
-                                        </div>
-                                        <div className="h-1 w-full bg-neutral-800">
-                                            <div className="h-full bg-red-600 w-full animate-pulse"></div>
-                                        </div>
-                                    </div>
-                                    <div className="p-3 md:p-4 bg-white/5 border-l-2 border-emerald-500">
-                                        <div className="flex justify-between items-end mb-2">
-                                            <p className="text-[8px] md:text-[9px] text-neutral-400 font-black uppercase tracking-tighter">TVA Export / Remote</p>
-                                            <span className="text-[9px] font-bold text-emerald-500 uppercase">Optimisé</span>
-                                        </div>
-                                        <div className="h-1 w-full bg-neutral-800">
-                                            <div className="h-full bg-emerald-500 w-[92%]"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="p-4 md:p-5 bg-black/80 border border-red-600/20 flex items-start gap-4 text-left">
-                                    <div className="text-red-600 mt-1 shrink-0"><IconCpu /></div>
-                                    <div>
-                                        <p className="text-[9px] font-black uppercase text-red-500 mb-1 tracking-widest">IA Strategos 2.0</p>
-                                        <p className="text-[10px] md:text-[11px] text-neutral-400 italic leading-relaxed">
-                                            "Art. 14 LF2026 détecté. Économie latente : 14,500 TND."
-                                        </p>
-                                    </div>
+                    <section className="relative pt-40 pb-24 md:pt-56 md:pb-40 px-6 bg-neutral-50 overflow-hidden text-left">
+                        <div className="max-w-7xl mx-auto relative z-10">
+                            <div className="max-w-3xl">
+                                <h1 className="text-5xl md:text-7xl font-extrabold text-wwc-grey leading-[1.1] mb-8">
+                                    L'Expertise qui <br/>
+                                    <span className="text-wwc-lime">Propulse</span> votre Ambition.
+                                </h1>
+                                <p className="text-lg md:text-xl text-neutral-500 mb-10 leading-relaxed max-w-2xl italic">
+                                    Cabinet d'expertise comptable et de commissariat aux comptes. Nous sécurisons vos opérations en Tunisie et structurons votre croissance à l'international.
+                                </p>
+                                <div className="flex flex-wrap gap-4">
+                                    <button className="bg-wwc-lime text-wwc-grey px-10 py-4 font-bold text-sm uppercase tracking-widest hover:bg-black hover:text-white transition-all shadow-lg shadow-wwc-lime/20">
+                                        Demander un Audit
+                                    </button>
+                                    <button className="border-2 border-wwc-grey text-wwc-grey px-10 py-4 font-bold text-sm uppercase tracking-widest hover:bg-wwc-grey hover:text-white transition-all">
+                                        Nos Services
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </header>
+                        <div className="absolute top-0 right-0 w-1/2 h-full bg-[#f8fcf0] -skew-x-12 translate-x-32 z-0 hidden lg:block"></div>
+                    </section>
 
-                    {/* Expertise Pillars - Grid responsive */}
-                    <section id="expertise" className="bg-white text-black py-24 md:py-32 px-4 md:px-6">
+                    {/* Expertise Section */}
+                    <section id="expertise" className="py-24 md:py-32 px-6">
                         <div className="max-w-7xl mx-auto">
-                            <div className="mb-16 md:mb-20 text-center lg:text-left">
-                                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-4 italic">Ingénierie de la <br/> <span className="text-red-600">Prospérité.</span></h2>
-                                <p className="text-neutral-500 font-bold uppercase text-[10px] tracking-widest">Vos fronts de défense stratégique.</p>
+                            <div className="text-center mb-20">
+                                <h2 className="text-3xl md:text-5xl font-extrabold text-wwc-grey mb-4 italic">Nos Domaines d'Intervention</h2>
+                                <div className="w-20 h-1.5 bg-wwc-lime mx-auto"></div>
                             </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 border border-black/10">
-                                <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-black/10 hover:bg-neutral-50 transition-colors group text-left">
-                                    <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconScale /></div>
-                                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4">Front Tunisie</h3>
-                                    <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                                        Maîtrise du code IRPP/IS et circulaires DGI. Gestion rigoureuse de la liasse fiscale et de la conformité sociale pour une sécurité totale.
-                                    </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {[
+                                    { title: "Expertise Comptable", desc: "Tenue, surveillance et établissement de vos états financiers aux normes nationales et IFRS." },
+                                    { title: "Audit & Légal", desc: "Commissariat aux comptes et audits contractuels pour sécuriser vos parties prenantes." },
+                                    { title: "Conseil Fiscal", desc: "Optimisation fiscale et assistance lors des contrôles pour protéger votre trésorerie." },
+                                    { title: "International", desc: "Accompagnement des investisseurs étrangers et structuration de flux transfrontaliers." }
+                                ].map((item, index) => (
+                                    <div key={index} className="p-8 border border-neutral-100 bg-white hover-lift text-left flex flex-col h-full">
+                                        <div className="w-12 h-12 bg-wwc-lime/10 text-wwc-lime flex items-center justify-center mb-6">
+                                            <IconCheck />
+                                        </div>
+                                        <h3 className="text-xl font-bold text-wwc-grey mb-4 uppercase tracking-tighter">{item.title}</h3>
+                                        <p className="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">{item.desc}</p>
+                                        <a href="#" className="text-wwc-lime font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all">
+                                            En savoir plus <span>→</span>
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Valeurs */}
+                    <section id="valeurs" className="py-24 bg-wwc-grey text-white px-6">
+                        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+                            <div className="lg:w-1/2 text-left">
+                                <h2 className="text-4xl md:text-5xl font-extrabold mb-8 leading-tight">
+                                    Pourquoi choisir <br/> <span className="text-wwc-lime italic underline">We Work Consulting ?</span>
+                                </h2>
+                                <div className="space-y-8">
+                                    {[
+                                        "Réactivité chirurgicale : Une réponse sous 24h.",
+                                        "Expertise biculturelle : Maîtrise des enjeux locaux et globaux.",
+                                        "Technologie intégrée : Pilotage de votre data en temps réel.",
+                                        "Transparence totale : Honoraires clairs et sans surprises."
+                                    ].map((val, i) => (
+                                        <div key={i} className="flex items-start gap-4">
+                                            <div className="mt-1 text-wwc-lime"><IconCheck /></div>
+                                            <p className="text-lg font-medium opacity-90">{val}</p>
+                                        </div>
+                                    ))}
                                 </div>
-                                <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-black/10 hover:bg-neutral-50 transition-colors group text-left">
-                                    <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconGlobe /></div>
-                                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4">Export & Offshore</h3>
-                                    <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                                        SaaS, agences web et freelances. Optimisation des rapatriements de devises et structuration internationale (France, USA, Dubaï).
-                                    </p>
+                            </div>
+                            <div className="lg:w-1/2 w-full grid grid-cols-2 gap-4">
+                                <div className="bg-white/5 aspect-square flex flex-col items-center justify-center border border-white/10">
+                                    <span className="text-5xl font-black text-wwc-lime mb-2">+150</span>
+                                    <span className="text-xs uppercase font-bold tracking-widest opacity-60">Clients Actifs</span>
                                 </div>
-                                <div className="p-8 md:p-12 hover:bg-neutral-50 transition-colors group text-left">
-                                    <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconCpu /></div>
-                                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4">Audit IA</h3>
-                                    <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                                        Audit prédictif 2026. Nos systèmes analysent 100% de vos flux pour identifier les failles avant qu'elles ne deviennent des risques.
-                                    </p>
+                                <div className="bg-white/10 aspect-square flex flex-col items-center justify-center">
+                                    <span className="text-5xl font-black text-white mb-2">10+</span>
+                                    <span className="text-xs uppercase font-bold tracking-widest opacity-60 text-center">Années d'Expertise</span>
+                                </div>
+                                <div className="bg-white/10 aspect-square flex flex-col items-center justify-center">
+                                    <IconGlobe />
+                                    <span className="text-xs uppercase font-bold tracking-widest mt-4 opacity-60 text-center uppercase tracking-tighter">Présence Globale</span>
+                                </div>
+                                <div className="bg-wwc-lime text-wwc-grey aspect-square flex flex-col items-center justify-center">
+                                    <span className="text-4xl font-black mb-2 leading-none text-center italic">Audit <br/> Ready</span>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* Simulator - Responsive design */}
-                    <section id="simulator" className="py-24 md:py-32 px-4 md:px-6 max-w-6xl mx-auto">
-                        <div className="text-center mb-16 md:mb-20">
-                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter mb-4 italic">Votre rentabilité est mal <br/> <span className="text-red-600">Configurée.</span></h2>
-                            <p className="text-neutral-500 font-bold uppercase text-[9px] md:text-[10px] tracking-[0.4em]">Simulateur d'impact financier</p>
-                        </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-                            <div className="space-y-10">
-                                <div className="space-y-8">
-                                    <div className="group text-left">
-                                        <div className="flex justify-between text-[9px] font-black uppercase text-neutral-500 tracking-widest mb-6">
-                                            <span>Chiffre d'Affaires</span>
-                                            <span className="text-white">{revenue.toLocaleString()} €</span>
+                    {/* Simulator */}
+                    <section id="simulator" className="py-24 md:py-32 px-6 max-w-5xl mx-auto">
+                        <div className="bg-neutral-50 p-10 md:p-20 border border-neutral-200">
+                            <div className="text-center mb-16">
+                                <h2 className="text-3xl md:text-4xl font-extrabold text-wwc-grey mb-4 italic">Simulateur d'Optimisation</h2>
+                                <p className="text-neutral-500 font-medium italic">Estimez vos marges de manœuvre fiscales.</p>
+                            </div>
+                            
+                            <div className="grid md:grid-cols-2 gap-16 items-center">
+                                <div className="space-y-10 text-left">
+                                    <div>
+                                        <div className="flex justify-between text-xs font-black uppercase text-neutral-400 mb-4 tracking-widest">
+                                            <span>Chiffre d'Affaires Annuel</span>
+                                            <span className="text-wwc-grey font-bold">{revenue.toLocaleString()} €</span>
                                         </div>
                                         <input 
                                             type="range" 
                                             min="100000" 
-                                            max="5000000" 
-                                            step="50000"
+                                            max="10000000" 
+                                            step="100000"
                                             value={revenue}
                                             onChange={(e) => setRevenue(parseInt(e.target.value))}
-                                            className="w-full h-1.5 bg-neutral-800 appearance-none cursor-pointer accent-red-600"
                                         />
                                     </div>
-                                    <div className="text-left">
-                                        <span className="text-[9px] font-black uppercase text-neutral-500 tracking-widest block mb-6">Profil d'Activité</span>
-                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                            {['onshore', 'offshore', 'international'].map((type) => (
-                                                <button 
-                                                    key={type}
-                                                    onClick={() => setTaxProfile(type)}
-                                                    className={`py-3 md:py-4 text-[9px] font-black uppercase tracking-widest border transition-all duration-300 ${taxProfile === type ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' : 'border-white/10 text-neutral-500 hover:border-white/30'}`}
-                                                >
-                                                    {type}
-                                                </button>
-                                            ))}
-                                        </div>
+                                    <div className="p-6 bg-white border-l-4 border-wwc-lime italic text-sm text-neutral-600">
+                                        "Une structuration adaptée permet de réduire la pression fiscale de 15% en moyenne."
                                     </div>
                                 </div>
-                            </div>
-                            <div className="relative">
-                                <div className="absolute -inset-1 bg-red-600 blur opacity-10"></div>
-                                <div className="relative bg-red-600 p-8 md:p-12 text-black text-center group shadow-2xl">
-                                    <h3 className="text-[9px] font-black uppercase tracking-[0.4em] mb-6 md:mb-8">Gain Potentiel Estimé</h3>
-                                    <p className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-4 md:mb-8 leading-none">
-                                        {savings.toLocaleString()}
+                                <div className="bg-wwc-lime p-10 text-wwc-grey text-center shadow-xl">
+                                    <h3 className="text-xs font-black uppercase tracking-widest mb-6 opacity-60 tracking-widest">Gain Potentiel Annuel</h3>
+                                    <p className="text-5xl md:text-6xl font-black mb-10 tracking-tighter">
+                                        {savings.toLocaleString()} €
                                     </p>
-                                    <p className="text-base md:text-xl font-black uppercase mb-8 md:mb-10 italic opacity-80">EUR / AN</p>
-                                    <button className="w-full bg-black text-white py-4 md:py-5 text-[10px] font-black uppercase tracking-widest hover:bg-neutral-900 transition-all group-hover:scale-[1.02] duration-300 shadow-2xl">
-                                        Démarrer le plan d'action
+                                    <button className="bg-wwc-grey text-white w-full py-4 text-xs font-bold uppercase tracking-widest hover:bg-black transition-all">
+                                        Réclamer mon Diagnostic
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* Footer - Optimized grid */}
-                    <footer className="bg-[#080808] border-t border-white/5 py-20 md:py-24 px-4 md:px-6 mt-auto">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 text-center md:text-left">
-                            <div className="flex flex-col items-center md:items-start">
-                                <div className="text-xl font-black tracking-tighter mb-6 italic">WEWORK-CONSULTING<span className="text-red-600">.XYZ</span></div>
-                                <p className="text-[9px] text-neutral-600 font-black uppercase leading-relaxed tracking-widest max-w-xs">Tunis Hub — Lac II<br/>Paris — Silicon Oasis Dubai<br/>Expertise Stratégique 2026</p>
+                    {/* Footer */}
+                    <footer className="bg-white border-t border-neutral-100 pt-24 pb-12 px-6 text-wwc-grey">
+                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20 text-left">
+                            <div>
+                                <div className="flex items-center gap-3 mb-8">
+                                    <img src="logowwc.jpg" className="h-10 w-auto object-contain" alt="WWC Logo" />
+                                </div>
+                                <p className="text-xs text-neutral-500 font-medium leading-relaxed uppercase tracking-[0.2em]">
+                                    Immeuble le Grand Large<br/>
+                                    Berges du Lac 2, Tunis<br/>
+                                    Tunisie
+                                </p>
                             </div>
-                            <div className="hidden sm:block">
-                                <h4 className="text-[9px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Tunisia Desk</h4>
-                                <ul className="text-[9px] text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
-                                    <li className="hover:text-white transition-colors cursor-pointer">Liasse Fiscale IA</li>
-                                    <li className="hover:text-white transition-colors cursor-pointer">Conformité Sociale</li>
-                                    <li className="hover:text-white transition-colors cursor-pointer">Audit Légal</li>
+                            <div>
+                                <h4 className="font-black text-xs uppercase tracking-[0.3em] mb-8 tracking-widest">Services</h4>
+                                <ul className="text-xs text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
+                                    <li className="hover:text-wwc-lime cursor-pointer">Expertise Comptable</li>
+                                    <li className="hover:text-wwc-lime cursor-pointer">Audit Légal</li>
+                                    <li className="hover:text-wwc-lime cursor-pointer">Conseil Fiscal</li>
+                                    <li className="hover:text-wwc-lime cursor-pointer">Juridique</li>
                                 </ul>
                             </div>
-                            <div className="hidden lg:block">
-                                <h4 className="text-[9px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Global Desk</h4>
-                                <ul className="text-[9px] text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
-                                    <li className="hover:text-white transition-colors cursor-pointer">Prix de Transfert</li>
-                                    <li className="hover:text-white transition-colors cursor-pointer">IP Box Structures</li>
-                                    <li className="hover:text-white transition-colors cursor-pointer">Remote Work Tax</li>
+                            <div>
+                                <h4 className="font-black text-xs uppercase tracking-[0.3em] mb-8 tracking-widest">Direct</h4>
+                                <ul className="text-xs text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
+                                    <li>+216 71 000 000</li>
+                                    <li>contact@wework-consulting.xyz</li>
+                                    <li className="text-wwc-lime cursor-pointer">Prendre RDV en ligne</li>
                                 </ul>
                             </div>
-                            <div className="flex flex-col items-center md:items-start">
-                                <h4 className="text-[9px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Sécurité</h4>
-                                <div className="w-full p-4 border border-red-600/30 bg-red-600/5 text-left">
-                                    <p className="text-[9px] font-black text-white uppercase mb-1 tracking-tighter">Signal Encrypted</p>
-                                    <p className="text-[10px] font-black text-red-500">@wework.compliance.xyz</p>
+                            <div>
+                                <h4 className="font-black text-xs uppercase tracking-[0.3em] mb-8 tracking-widest">Newsletter</h4>
+                                <div className="flex border-b border-wwc-grey pb-2">
+                                    <input type="email" placeholder="Email" className="bg-transparent text-xs uppercase font-bold w-full outline-none" />
+                                    <button className="text-wwc-lime font-black">OK</button>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div className="mt-16 md:mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
-                            <div className="flex flex-wrap justify-center gap-6 md:gap-12 grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-700">
-                                <span className="font-black italic text-sm md:text-lg tracking-tighter">SaaS_TN</span>
-                                <span className="font-black italic text-sm md:text-lg tracking-tighter">TECH_LAB</span>
-                                <span className="font-black italic text-sm md:text-lg tracking-tighter">GROWTH_CO</span>
-                            </div>
-                            <div className="text-[8px] text-neutral-800 font-black uppercase tracking-[0.5em] text-center">
-                                &copy; 2026 wework-consulting.xyz — no compromises.
+                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center pt-12 border-t border-neutral-50 gap-6 text-center">
+                            <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-[0.4em]">
+                                &copy; 2026 We Work Consulting — Excellence in Every Audit.
+                            </p>
+                            <div className="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                                <a href="#" className="hover:text-wwc-lime">Mentions Légales</a>
+                                <a href="#" className="hover:text-wwc-lime">Confidentialité</a>
                             </div>
                         </div>
                     </footer>
