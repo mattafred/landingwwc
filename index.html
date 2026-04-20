@@ -1,247 +1,289 @@
-import React, { useState, useEffect } from 'react';
-
-// Icônes SVG intégrées pour garantir un rendu 100% fiable sans dépendances
-const IconArrowRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>;
-const IconGlobe = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
-const IconShield = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
-const IconCpu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>;
-const IconScale = () => <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>;
-
-const App = () => {
-  const [revenue, setRevenue] = useState(1000000);
-  const [taxProfile, setTaxProfile] = useState('offshore'); // Par défaut offshore pour l'attractivité
-  const [savings, setSavings] = useState(0);
-
-  useEffect(() => {
-    // Arbitrage fiscal : Onshore (8%), Offshore (15%), International (25% car optimisation de flux complexe)
-    const multiplier = taxProfile === 'onshore' ? 0.08 : taxProfile === 'offshore' ? 0.15 : 0.25;
-    setSavings(Math.round(revenue * multiplier));
-  }, [revenue, taxProfile]);
-
-  return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-red-600/30 overflow-x-hidden">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between px-6 py-6 max-w-7xl mx-auto border-b border-white/5 backdrop-blur-md sticky top-0 z-50 bg-[#050505]/80">
-        <div className="flex items-center gap-2 text-xl md:text-2xl font-black tracking-tighter italic">
-          <div className="w-10 h-10 bg-red-600 rounded-sm flex items-center justify-center text-white not-italic shadow-lg shadow-red-600/20">W</div>
-          WEWORK-CONSULTING<span className="text-red-600">.XYZ</span>
-        </div>
-        <div className="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-500">
-          <a href="#expertise" className="hover:text-red-500 transition-colors">Tunisie Compliance</a>
-          <a href="#international" className="hover:text-red-500 transition-colors">Global Tax</a>
-          <a href="#simulator" className="hover:text-red-500 transition-colors">Audit IA</a>
-        </div>
-        <button className="bg-white text-black px-6 py-2.5 rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300">
-          Client Portal
-        </button>
-      </nav>
-
-      {/* Hero Section */}
-      <header className="px-6 pt-20 pb-32 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-        <div className="flex-1 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-500 text-[9px] font-black uppercase tracking-[0.3em] mb-10 animate-pulse">
-            <IconShield /> Tunisian Law & Global Standards
-          </div>
-          <h1 className="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter mb-8 uppercase">
-            Neutralisez la <br/> <span className="text-red-600">Friction</span> fiscale.
-          </h1>
-          <p className="text-lg md:text-xl text-neutral-400 max-w-xl mb-12 font-medium leading-relaxed">
-            L'administration tunisienne est devenue algorithmique. Votre défense doit l'être aussi. 
-            <span className="text-white"> wework-consulting.xyz</span> déploie une ingénierie fiscale prédictive pour transformer vos obligations en leviers de croissance.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <button className="bg-red-600 text-white px-12 py-5 font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 flex items-center justify-center gap-3 group">
-              Démarrer l'audit 2026 <span className="group-hover:translate-x-2 transition-transform"><IconArrowRight /></span>
-            </button>
-            <button className="border border-white/10 bg-white/5 backdrop-blur-sm px-12 py-5 font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all duration-300">
-              Prix de Transfert
-            </button>
-          </div>
-        </div>
-
-        {/* Tactical UI Component - Data Visualization */}
-        <div className="w-full max-w-xl relative group">
-          <div className="absolute -inset-10 bg-red-600/10 blur-[120px] opacity-30 pointer-events-none"></div>
-          <div className="relative bg-neutral-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-none shadow-2xl overflow-hidden">
-            <div className="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
-              <div>
-                <h3 className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1">Status de Conformité (DGI TN)</h3>
-                <p className="text-4xl font-black text-emerald-400 tracking-tighter">99.8% <span className="text-[10px] text-neutral-600 uppercase ml-2 tracking-widest">Protégé</span></p>
-              </div>
-              <div className="text-right">
-                <h3 className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1">Optimisation Réalisée</h3>
-                <p className="text-4xl font-black text-red-500 tracking-tighter">-22.5%</p>
-              </div>
-            </div>
-            
-            <div className="space-y-6 mb-10">
-              <div className="p-4 bg-white/5 border-l-2 border-red-600">
-                <div className="flex justify-between items-end mb-2">
-                  <p className="text-[9px] text-neutral-400 font-black uppercase">Retenue à la source (RS)</p>
-                  <span className="text-[10px] font-bold text-red-500">Flux Sécurisé</span>
-                </div>
-                <div className="h-1 w-full bg-neutral-800">
-                  <div className="h-full bg-red-600 w-full animate-pulse"></div>
-                </div>
-              </div>
-              <div className="p-4 bg-white/5 border-l-2 border-emerald-500">
-                <div className="flex justify-between items-end mb-2">
-                  <p className="text-[9px] text-neutral-400 font-black uppercase">TVA Export / Remote work</p>
-                  <span className="text-[10px] font-bold text-emerald-500">0% Appliqué</span>
-                </div>
-                <div className="h-1 w-full bg-neutral-800">
-                  <div className="h-full bg-emerald-500 w-[92%]"></div>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-5 bg-black/80 border border-red-600/20 flex items-start gap-4">
-              <div className="text-red-600 mt-1"><IconCpu /></div>
-              <div>
-                <p className="text-[10px] font-black uppercase text-red-500 mb-1 tracking-widest">Moteur IA Strategos 2.0</p>
-                <p className="text-[11px] text-neutral-400 italic leading-relaxed">
-                  "Détection d'un avantage fiscal non réclamé (Art. 14 LF2026). Économie potentielle : 14,500 TND."
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Expertise Pillars */}
-      <section id="expertise" className="bg-white text-black py-32 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-20">
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-4">L'Ingénierie de la <br/> <span className="text-red-600">Prospérité.</span></h2>
-            <p className="text-neutral-500 font-bold uppercase text-xs tracking-widest">Trois fronts de bataille pour votre capital.</p>
-          </div>
-          <div className="grid lg:grid-cols-3 gap-0 border border-black/10">
-            <div className="p-12 border-b lg:border-b-0 lg:border-r border-black/10 hover:bg-neutral-50 transition-colors group">
-              <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconScale /></div>
-              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Front Tunisie</h3>
-              <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                Maîtrise absolue du code IRPP/IS et des circulaires de la DGI. Nous gérons votre conformité (Bilans, CNSS, TVA) avec une rigueur qui décourage tout contrôle fiscal.
-              </p>
-            </div>
-            <div className="p-12 border-b lg:border-b-0 lg:border-r border-black/10 hover:bg-neutral-50 transition-colors group">
-              <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconGlobe /></div>
-              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Export & Offshore</h3>
-              <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                Spécialistes des agences web, SaaS et freelances internationaux. Nous optimisons vos rapatriements de devises et vos structures de management étrangères sans zone grise.
-              </p>
-            </div>
-            <div className="p-12 hover:bg-neutral-50 transition-colors group">
-              <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconCpu /></div>
-              <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Audit Augmenté</h3>
-              <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                Le commissariat aux comptes version 2026. Nos algorithmes analysent 100% de vos flux en continu pour identifier les failles de gestion avant qu'elles ne coûtent cher.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Simulator Section */}
-      <section id="simulator" className="py-32 px-6 max-w-6xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 italic">Votre rentabilité est mal <br/> <span className="text-red-600">Configurée.</span></h2>
-          <p className="text-neutral-500 font-bold uppercase text-[10px] tracking-[0.4em]">Simulez l'impact wework-consulting</p>
-        </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEWORK-CONSULTING.XYZ | Expertise Comptable & Audit 2026</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050505; }
         
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          <div className="space-y-12">
-            <div className="space-y-8">
-              <div className="group">
-                <div className="flex justify-between text-[10px] font-black uppercase text-neutral-500 tracking-widest mb-6">
-                  <span>Chiffre d'Affaires Annuel</span>
-                  <span className="text-white">{parseInt(revenue).toLocaleString()} €</span>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+
+        .red-gradient-text {
+            background: linear-gradient(to right, #ef4444, #991b1b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            background: #ef4444;
+            border-radius: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Icônes SVG intégrées
+        const IconArrowRight = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>;
+        const IconGlobe = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>;
+        const IconShield = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
+        const IconCpu = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></svg>;
+        const IconScale = () => <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>;
+
+        const App = () => {
+            const [revenue, setRevenue] = useState(1000000);
+            const [taxProfile, setTaxProfile] = useState('offshore');
+            const [savings, setSavings] = useState(0);
+
+            useEffect(() => {
+                const multiplier = taxProfile === 'onshore' ? 0.08 : taxProfile === 'offshore' ? 0.15 : 0.25;
+                setSavings(Math.round(revenue * multiplier));
+            }, [revenue, taxProfile]);
+
+            return (
+                <div className="min-h-screen text-white overflow-x-hidden">
+                    {/* Navigation */}
+                    <nav className="flex items-center justify-between px-6 py-6 max-w-7xl mx-auto border-b border-white/5 backdrop-blur-md sticky top-0 z-50 bg-[#050505]/80">
+                        <div className="flex items-center gap-2 text-xl md:text-2xl font-black tracking-tighter italic">
+                            <div className="w-10 h-10 bg-red-600 rounded-sm flex items-center justify-center text-white not-italic shadow-lg shadow-red-600/20">W</div>
+                            WEWORK-CONSULTING<span className="text-red-600">.XYZ</span>
+                        </div>
+                        <div className="hidden lg:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-500">
+                            <a href="#expertise" className="hover:text-red-500 transition-colors">Tunisie Compliance</a>
+                            <a href="#international" className="hover:text-red-500 transition-colors">Global Tax</a>
+                            <a href="#simulator" className="hover:text-red-500 transition-colors">Audit IA</a>
+                        </div>
+                        <button className="bg-white text-black px-6 py-2.5 rounded-none text-[10px] font-black uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300">
+                            Client Portal
+                        </button>
+                    </nav>
+
+                    {/* Hero Section */}
+                    <header className="px-6 pt-20 pb-32 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+                        <div className="flex-1 text-center lg:text-left">
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-600/10 border border-red-600/20 text-red-500 text-[9px] font-black uppercase tracking-[0.3em] mb-10 animate-pulse">
+                                <IconShield /> Tunisian Law & Global Standards
+                            </div>
+                            <h1 className="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter mb-8 uppercase">
+                                Neutralisez la <br/> <span className="text-red-600">Friction</span> fiscale.
+                            </h1>
+                            <p className="text-lg md:text-xl text-neutral-400 max-w-xl mb-12 font-medium leading-relaxed">
+                                L'administration tunisienne est devenue algorithmique. Votre défense doit l'être aussi. 
+                                <span className="text-white"> wework-consulting.xyz</span> déploie une ingénierie fiscale prédictive pour transformer vos obligations en leviers de croissance.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                                <button className="bg-red-600 text-white px-12 py-5 font-black text-xs uppercase tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 flex items-center justify-center gap-3 group">
+                                    Démarrer l'audit 2026 <span className="group-hover:translate-x-2 transition-transform"><IconArrowRight /></span>
+                                </button>
+                                <button className="border border-white/10 bg-white/5 backdrop-blur-sm px-12 py-5 font-black text-xs uppercase tracking-[0.2em] hover:bg-white/10 transition-all duration-300">
+                                    Prix de Transfert
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Visual Component */}
+                        <div className="w-full max-w-xl relative group">
+                            <div className="absolute -inset-10 bg-red-600/10 blur-[120px] opacity-30 pointer-events-none"></div>
+                            <div className="relative bg-neutral-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-none shadow-2xl overflow-hidden">
+                                <div className="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
+                                    <div>
+                                        <h3 className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1 text-left">Status de Conformité (DGI TN)</h3>
+                                        <p className="text-4xl font-black text-emerald-400 tracking-tighter text-left">99.8% <span className="text-[10px] text-neutral-600 uppercase ml-2 tracking-widest">Protégé</span></p>
+                                    </div>
+                                    <div className="text-right">
+                                        <h3 className="text-[9px] text-neutral-500 font-black uppercase tracking-widest mb-1">Optimisation Réalisée</h3>
+                                        <p className="text-4xl font-black text-red-500 tracking-tighter">-22.5%</p>
+                                    </div>
+                                </div>
+                                <div className="space-y-6 mb-10">
+                                    <div className="p-4 bg-white/5 border-l-2 border-red-600">
+                                        <div className="flex justify-between items-end mb-2">
+                                            <p className="text-[9px] text-neutral-400 font-black uppercase">Retenue à la source (RS)</p>
+                                            <span className="text-[10px] font-bold text-red-500">Flux Sécurisé</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-neutral-800">
+                                            <div className="h-full bg-red-600 w-full animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <div className="p-4 bg-white/5 border-l-2 border-emerald-500 text-left">
+                                        <div className="flex justify-between items-end mb-2">
+                                            <p className="text-[9px] text-neutral-400 font-black uppercase">TVA Export / Remote work</p>
+                                            <span className="text-[10px] font-bold text-emerald-500">0% Appliqué</span>
+                                        </div>
+                                        <div className="h-1 w-full bg-neutral-800">
+                                            <div className="h-full bg-emerald-500 w-[92%]"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="p-5 bg-black/80 border border-red-600/20 flex items-start gap-4 text-left">
+                                    <div className="text-red-600 mt-1"><IconCpu /></div>
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase text-red-500 mb-1 tracking-widest">Moteur IA Strategos 2.0</p>
+                                        <p className="text-[11px] text-neutral-400 italic leading-relaxed">
+                                            "Détection d'un avantage fiscal non réclamé (Art. 14 LF2026). Économie potentielle : 14,500 TND."
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Expertise */}
+                    <section id="expertise" className="bg-white text-black py-32 px-6">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="mb-20 text-left">
+                                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-4">L'Ingénierie de la <br/> <span className="text-red-600">Prospérité.</span></h2>
+                                <p className="text-neutral-500 font-bold uppercase text-xs tracking-widest">Trois fronts de bataille pour votre capital.</p>
+                            </div>
+                            <div className="grid lg:grid-cols-3 gap-0 border border-black/10">
+                                <div className="p-12 border-b lg:border-b-0 lg:border-r border-black/10 hover:bg-neutral-50 transition-colors group text-left">
+                                    <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconScale /></div>
+                                    <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Front Tunisie</h3>
+                                    <p className="text-neutral-600 text-sm leading-relaxed font-medium">
+                                        Maîtrise absolue du code IRPP/IS et des circulaires de la DGI. Nous gérons votre conformité (Bilans, CNSS, TVA) avec une rigueur qui décourage tout contrôle fiscal.
+                                    </p>
+                                </div>
+                                <div className="p-12 border-b lg:border-b-0 lg:border-r border-black/10 hover:bg-neutral-50 transition-colors group text-left">
+                                    <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconGlobe /></div>
+                                    <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Export & Offshore</h3>
+                                    <p className="text-neutral-600 text-sm leading-relaxed font-medium">
+                                        Spécialistes des agences web, SaaS et freelances internationaux. Nous optimisons vos rapatriements de devises et vos structures de management étrangères sans zone grise.
+                                    </p>
+                                </div>
+                                <div className="p-12 hover:bg-neutral-50 transition-colors group text-left">
+                                    <div className="mb-8 text-black group-hover:text-red-600 transition-colors"><IconCpu /></div>
+                                    <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Audit Augmenté</h3>
+                                    <p className="text-neutral-600 text-sm leading-relaxed font-medium">
+                                        Le commissariat aux comptes version 2026. Nos algorithmes analysent 100% de vos flux en continu pour identifier les failles de gestion avant qu'elles ne coûtent cher.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Simulator */}
+                    <section id="simulator" className="py-32 px-6 max-w-6xl mx-auto">
+                        <div className="text-center mb-20">
+                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4 italic">Votre rentabilité est mal <br/> <span className="text-red-600">Configurée.</span></h2>
+                            <p className="text-neutral-500 font-bold uppercase text-[10px] tracking-[0.4em]">Simulez l'impact wework-consulting</p>
+                        </div>
+                        <div className="grid lg:grid-cols-2 gap-20 items-center">
+                            <div className="space-y-12">
+                                <div className="space-y-8">
+                                    <div className="group text-left">
+                                        <div className="flex justify-between text-[10px] font-black uppercase text-neutral-500 tracking-widest mb-6">
+                                            <span>Chiffre d'Affaires Annuel</span>
+                                            <span className="text-white">{revenue.toLocaleString()} €</span>
+                                        </div>
+                                        <input 
+                                            type="range" 
+                                            min="100000" 
+                                            max="5000000" 
+                                            step="50000"
+                                            value={revenue}
+                                            onChange={(e) => setRevenue(parseInt(e.target.value))}
+                                            className="w-full h-1 bg-neutral-800 appearance-none cursor-pointer accent-red-600"
+                                        />
+                                    </div>
+                                    <div className="text-left">
+                                        <span className="text-[10px] font-black uppercase text-neutral-500 tracking-widest block mb-6">Configuration de l'activité</span>
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {['onshore', 'offshore', 'international'].map((type) => (
+                                                <button 
+                                                    key={type}
+                                                    onClick={() => setTaxProfile(type)}
+                                                    className={`py-4 text-[10px] font-black uppercase tracking-widest border transition-all duration-300 ${taxProfile === type ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' : 'border-white/10 text-neutral-500 hover:border-white/30'}`}
+                                                >
+                                                    {type}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="relative">
+                                <div className="absolute -inset-1 bg-red-600 blur opacity-20"></div>
+                                <div className="relative bg-red-600 p-12 text-black text-center group">
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] mb-8">Gain Net de Trésorerie</h3>
+                                    <p className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-none">{savings.toLocaleString()}</p>
+                                    <p className="text-xl font-black uppercase mb-10 italic">Euro / An</p>
+                                    <button className="w-full bg-black text-white py-5 text-xs font-black uppercase tracking-widest hover:bg-neutral-900 transition-all group-hover:scale-[1.02] duration-300 shadow-2xl">
+                                        Activer ce plan stratégique
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer className="bg-[#080808] border-t border-white/5 py-24 px-6">
+                        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 text-center md:text-left">
+                            <div className="md:col-span-1">
+                                <div className="text-xl font-black tracking-tighter mb-8 italic">WEWORK-CONSULTING<span className="text-red-600">.XYZ</span></div>
+                                <p className="text-[10px] text-neutral-600 font-black uppercase leading-relaxed tracking-widest">Tunis Hub — Lac II<br/>Paris — Silicon Oasis Dubai<br/>Strategic Tax & Audit Engineering</p>
+                            </div>
+                            <div>
+                                <h4 className="text-[10px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Tunisia Desk</h4>
+                                <ul className="text-[10px] text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
+                                    <li>Liasse Fiscale IA</li>
+                                    <li>Contrôle CNSS/Impôts</li>
+                                    <li>Consolidation IFRS</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 className="text-[10px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Global Desk</h4>
+                                <ul className="text-[10px] text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
+                                    <li>Transfer Pricing</li>
+                                    <li>IP Box & Royalty Flow</li>
+                                    <li>Non-Resident Setup</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 className="text-[10px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600 text-left">Urgence Réseaux</h4>
+                                <div className="p-5 border border-red-600/30 bg-red-600/5 text-left">
+                                    <p className="text-[10px] font-black text-white uppercase mb-2">Signal Encrypted</p>
+                                    <p className="text-xs font-black text-red-500">@wework.compliance.xyz</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+                            <div className="flex gap-12 grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-700">
+                                <span className="font-black italic text-lg tracking-tighter">SaaS_TUNISIE</span>
+                                <span className="font-black italic text-lg tracking-tighter">OFFSHORE_LAB</span>
+                                <span className="font-black italic text-lg tracking-tighter">TECH_CENTER</span>
+                            </div>
+                            <div className="text-[9px] text-neutral-800 font-black uppercase tracking-[0.5em]">
+                                &copy; 2026 wework-consulting.xyz — no compromises.
+                            </div>
+                        </div>
+                    </footer>
                 </div>
-                <input 
-                  type="range" 
-                  min="100000" 
-                  max="5000000" 
-                  step="50000"
-                  value={revenue}
-                  onChange={(e) => setRevenue(e.target.value)}
-                  className="w-full h-1 bg-neutral-800 appearance-none cursor-pointer accent-red-600"
-                />
-              </div>
+            );
+        };
 
-              <div>
-                <span className="text-[10px] font-black uppercase text-neutral-500 tracking-widest block mb-6">Configuration de l'activité</span>
-                <div className="grid grid-cols-3 gap-2">
-                  {['onshore', 'offshore', 'international'].map((type) => (
-                    <button 
-                      key={type}
-                      onClick={() => setTaxProfile(type)}
-                      className={`py-4 text-[10px] font-black uppercase tracking-widest border transition-all duration-300 ${taxProfile === type ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' : 'border-white/10 text-neutral-500 hover:border-white/30'}`}
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative">
-            <div className="absolute -inset-1 bg-red-600 blur opacity-20"></div>
-            <div className="relative bg-red-600 p-12 text-black text-center group">
-              <h3 className="text-[10px] font-black uppercase tracking-[0.4em] mb-8">Gain Net de Trésorerie</h3>
-              <p className="text-7xl md:text-8xl font-black tracking-tighter mb-8 leading-none">{savings.toLocaleString()}</p>
-              <p className="text-xl font-black uppercase mb-10 italic">Euro / An</p>
-              <button className="w-full bg-black text-white py-5 text-xs font-black uppercase tracking-widest hover:bg-neutral-900 transition-all group-hover:scale-[1.02] duration-300 shadow-2xl">
-                Activer ce plan stratégique
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer / Social Proof */}
-      <footer className="bg-[#080808] border-t border-white/5 py-24 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-16 text-center md:text-left">
-          <div className="md:col-span-1">
-            <div className="text-xl font-black tracking-tighter mb-8 italic">WEWORK-CONSULTING<span className="text-red-600">.XYZ</span></div>
-            <p className="text-[10px] text-neutral-600 font-black uppercase leading-relaxed tracking-widest">Tunis Hub — Lac II<br/>Paris — Silicon Oasis Dubai<br/>Strategic Tax & Audit Engineering</p>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Tunisia Desk</h4>
-            <ul className="text-[10px] text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
-              <li className="hover:text-white transition-colors cursor-pointer">Liasse Fiscale IA</li>
-              <li className="hover:text-white transition-colors cursor-pointer">Contrôle CNSS/Impôts</li>
-              <li className="hover:text-white transition-colors cursor-pointer">Consolidation IFRS</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Global Desk</h4>
-            <ul className="text-[10px] text-neutral-500 font-bold space-y-4 uppercase tracking-widest">
-              <li className="hover:text-white transition-colors cursor-pointer">Transfer Pricing</li>
-              <li className="hover:text-white transition-colors cursor-pointer">IP Box & Royalty Flow</li>
-              <li className="hover:text-white transition-colors cursor-pointer">Non-Resident Setup</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-[10px] font-black uppercase text-white mb-8 tracking-[0.3em] text-red-600">Urgence Réseaux</h4>
-            <div className="p-5 border border-red-600/30 bg-red-600/5">
-              <p className="text-[10px] font-black text-white uppercase mb-2">Signal Encrypted</p>
-              <p className="text-xs font-black text-red-500">@wework.compliance.xyz</p>
-            </div>
-          </div>
-        </div>
-        <div className="mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex gap-12 grayscale opacity-40 hover:opacity-100 hover:grayscale-0 transition-all duration-700">
-             <span className="font-black italic text-lg tracking-tighter">SaaS_TUNISIE</span>
-             <span className="font-black italic text-lg tracking-tighter">OFFSHORE_LAB</span>
-             <span className="font-black italic text-lg tracking-tighter">TECH_CENTER</span>
-          </div>
-          <div className="text-[9px] text-neutral-800 font-black uppercase tracking-[0.5em]">
-            &copy; 2026 wework-consulting.xyz — no compromises.
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-export default App;
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
